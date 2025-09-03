@@ -47,13 +47,16 @@ jobs:
     
     - name: Install Solana
       run: |
-        sh -c "$(curl -sSfL https://release.solana.com/v1.14.17/install)"
+        wget -O solana-install-init.sh https://release.solana.com/v1.14.17/install
+        chmod +x solana-install-init.sh
+        ./solana-install-init.sh
         export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
+        echo 'export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"' >> $GITHUB_ENV
         solana --version
     
     - name: Install Anchor
       run: |
-        npm install -g @project-serum/anchor-cli
+        npm install -g @coral-xyz/anchor-cli
         anchor --version
     
     - name: Build Anchor program
